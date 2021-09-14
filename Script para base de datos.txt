@@ -1,0 +1,100 @@
+create schema reto5;
+use reto5;
+CREATE TABLE `usuarios` (
+  `usu_username` VARCHAR(40) NOT NULL,
+  `usu_nombre` VARCHAR(20) NULL,
+  `usu_apellido` VARCHAR(20) NULL,
+  `usu_email` VARCHAR(40) NULL,
+  `usu_celualr` BIGINT(40) NULL,
+  `usu_clave` VARCHAR(20) NULL,
+  `usu_fecha_nacimiento` DATE NULL,
+  PRIMARY KEY (`usu_username`));
+insert into usuarios values ("lucky", "Pedro", "Perez","lucky1217@gmail.com", 3122525899, "pedro1582", '1995-12-17');
+insert into usuarios values ("malopez", "Maria", "Lopez","malopez@gmail.com", 3015567118, "258maria", '1998-08-06');
+insert into usuarios values ("diva", "Ana", "Diaz","anadiva@outlook.com", 3229295869, "andiva58", '2000-05-23');
+insert into usuarios values ("dreamer", "Luis", "Rojas","luisrojas98@gmail.com", 3164532895, "3164532895", '1980-01-25');
+insert into usuarios values ("ninja", "Andres", "Cruz","ninja2002and@yahoo.com", 3122525899, "ninjahack", '1995-11-14');
+insert into usuarios values ("neon", "Nelson", "Ruiz","ruizneon@gmail.com", 3102586497, "elneonazul15", '1990-03-03');
+insert into usuarios values ("rose", "Claudia", "Mendez","claudmenrose@gmail.com", 3156952589, "rosekiss", '2003-09-11');
+insert into usuarios values ("green", "Jorge", "Rodriguez","jorgerodri1999@gmail.com", 3202586471, "jorgerod1016", '1999-10-16');
+CREATE TABLE `autor` (
+  `aut_id` INT NOT NULL,
+  `aut_nombres` VARCHAR(20) NULL,
+  `aut_apellidos` VARCHAR(20) NULL,
+  `aut_nacinalidad` VARCHAR(40) NULL,
+  PRIMARY KEY (`aut_id`));
+insert into autor values (101, "JK"," Rowling", " británica");
+insert into autor values (102, " Yann", " Martel", " canadiense");
+insert into autor values (103, " Arthur", " Conan", " británico");
+insert into autor values (104, " Michael", " Ende", " alemán");
+insert into autor values (105, " Antoine", " de Saint-Exupery", " francés");
+CREATE TABLE `recurso` (
+  `rec_id` INT NOT NULL,
+  `rec_titulo` VARCHAR(50) NULL,
+  PRIMARY KEY (`rec_id`));
+insert into recurso values(201,"Harry potter y las reliquias de la muerte");
+insert into recurso values(202,"Animales fantásticos y dónde encontrarlos");
+insert into recurso values(203,"La vida de pi");
+insert into recurso values(204,"El mundo perdido");
+insert into recurso values(205,"La historia interminable");
+insert into recurso values(206,"El principito");
+insert into recurso values(207,"Revista de integración educativa");
+insert into recurso values(208,"Revista eureka");
+insert into recurso values(209,"Cómo funciona");
+insert into recurso values(210,"La canica");
+insert into recurso values(211,"Educación matemática");
+insert into recurso values(212,"Revista biociencias");
+CREATE TABLE `libro` (
+  `lib_id` INT NOT NULL references recurso(rec_id),
+  `lib_resumen` VARCHAR(500) NOT NULL,
+  `lib_anio` INTEGER,
+  `lib_autor` INT references autor(aut_id),
+  PRIMARY KEY (`lib_id`));
+insert into libro values(201,"Un ejemplar que cierra la saga Harry Potter y que nos traslada al momento en el que su protagonista cumple 17 años y con ello, pierde el encantamiento protector que lo mantiene a salvo.",2007,101);
+insert into libro values(202,"contiene la historia de la magizoología y describe las 75 especies mágicas encontradas alrededor del mundo. Scamander dice que recolectó la mayoría de la información encontrada en el libro a través de observaciones hechas en años de viajes por los cinco continentes.",2001,101);
+insert into libro values(203,"Pi vive en la India con su padre, quien es propietario de un zoo. Pero deciden emigrar a Canadá para tener una vida mejor vendiendo animales.",2001,102);
+insert into libro values(204,"Ned Malone es un periodista que entrevista al excéntrico profesor Chanller. Tras su reunión el joven queda asombrado por él y termina uniéndose a la expedición que organiza para llegar a la llamada Tierra de Maple White.",1912,103);
+insert into libro values(205,"La Emperatriz Infantil está mortalmente enferma y su reino corre un grave peligro. La salvación depende de Atreyu, un valiente guerrero de la tribu de los pieles verdes, y Bastián, un niño tímido que lee con pasión un libro mágico.",1979,104);
+insert into libro values(206,"La moraleja de El Principito. Podemos comenzar destacando el valor de la amistad que encontramos en cada rincón de El Principito, sobre todo a través de su mascota.",1943,105);
+CREATE TABLE `revista` (
+  `rev_id` INT NOT NULL references recurso(rec_id),
+  `lib_volumen` INT,
+  `lib_serie` INT,
+  PRIMARY KEY (`rev_id`));
+insert into revista values(207,30,3);
+insert into revista values(208,31,4);
+insert into revista values(209,25,8);
+insert into revista values(210,170,8);
+insert into revista values(211,279,12);
+insert into revista values(212,79,6);
+CREATE TABLE `prestamo` (
+  `pre_id` INT NOT NULL,
+  `pre_usuario` VARCHAR(40) NOT NULL references usuarios(usu_username),
+  `pre_rec` VARCHAR(40) NOT NULL references recurso(rec_id),
+  `pre_fecha` DATETIME,
+  PRIMARY KEY (`pre_id`));
+insert into prestamo values(301,"lucky",201,'2017-10-25 20:00:00');
+insert into prestamo values(302,"lucky",202,'2019-03-15 18:30:00');
+insert into prestamo values(303,"lucky",204,'2019-05-20 20:30:00');
+insert into prestamo values(304,"malopez",203,'2018-05-20 20:30:00');
+insert into prestamo values(305,"malopez",202,'2020-01-20 20:30:00');
+insert into prestamo values(306,"diva",205,'2019-05-20 20:30:00');
+insert into prestamo values(307,"diva",208,'2020-03-17 15:30:20');
+insert into prestamo values(308,"dreamer",209,'2020-03-17 15:30:20');
+insert into prestamo values(309,"dreamer",211,'2020-04-10 18:30:20');
+insert into prestamo values(310,"ninja",211,'2020-02-17 20:30:20');
+insert into prestamo values(311,"ninja",203,'2020-02-20 16:30:20');
+insert into prestamo values(312,"ninja",208,'2020-03-27 18:30:20');
+insert into prestamo values(313,"rose",205,'2020-03-20 21:30:20');
+insert into prestamo values(314,"green",212,'2020-01-10 17:30:20');
+insert into prestamo values(315,"green",210,'2020-02-15 20:30:20');
+insert into prestamo values(316,"green",204,'2020-03-17 18:30:20');
+update libro set lib_anio = 1945 where lib_id = 206;
+update usuarios set usu_celualr = 3115678432 where usu_username = "ninja";
+delete from prestamo where pre_id = 315;
+CREATE TABLE `sesion` ( 
+	`se_id` INT NOT NULL AUTO_INCREMENT , 
+	`se_usuario` VARCHAR(30) NOT NULL , 
+	`se_pass` VARCHAR(30) NOT NULL , 
+	PRIMARY KEY (`se_id`));
+insert into sesion values(default, "Marco", "123456")	
