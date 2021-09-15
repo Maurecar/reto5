@@ -17,7 +17,7 @@ public class connectionDB {
         Connection conn = null;
         String host = "localhost";
         String user = "root";
-        String password = "Macky734";
+        String password = "xxxxxx";
         String port = "3306";
         String db = "reto4";
         String dbURL = "jdbc:mysql://" + host + ":" + port + "/" + db;
